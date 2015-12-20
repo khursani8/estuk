@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
-
-  before_action :authenticate_user!, only: [:new,:edit,:destroy,:create]
+  before_action :authenticate_user!, only: [:new,:edit,:destroy,:create,:update]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
@@ -21,12 +20,13 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
+    authorize! :manage,@book
   end
 
   # POST /books
   # POST /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.new(book_params)
 
     respond_to do |format|
       if @book.save
@@ -42,6 +42,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
+    authorize! :manage,@book
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
@@ -56,6 +57,7 @@ class BooksController < ApplicationController
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
+    authorize! :manage,@book
     @book.destroy
     respond_to do |format|
       format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
