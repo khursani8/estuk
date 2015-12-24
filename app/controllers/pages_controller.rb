@@ -4,6 +4,7 @@ before_action :authenticate_user!,only: [:dashboard]
   	if current_user
   		redirect_to books_path
   	end
+  	@books = Book.last(4)
   end
 
 
