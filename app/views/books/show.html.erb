@@ -10,7 +10,7 @@
 <h3><%= @book.name %> by <%= @book.author%></h3>
 <p><%= @book.description %></p>
 <br/>
-<h4>RM<%= @book.price.to_f / 10 %></h4>
+<h4>RM<%= @book.price.to_f / 100 %></h4>
 
 
 <%= form_tag buy_path(slug: @book.slug) do %>
